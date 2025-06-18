@@ -1,12 +1,12 @@
 # Encryption-and-Decryption-Using-KMS
-# Implementing-AWS-WAF-with-ALB-to-block-SQL-Injection-Geo-Location-and-Query-string
 
 ## Purpose of the Hands on
 
+Create AWS KMS key for encrypting data at rest and performing server-side encryption. AWS KMS addresses this by storing customer master keys, which can directly perform encryption or generate unique symmetric data keys. These data keys, whether 128 or 256 bits, are encrypted using the customer master key.
 
-Setting up an Application Load Balancer in AWS Elastic Load Balancer by divide the incoming traffic to both EC2 Instances (servers) in a Round Robin manner. To prevent access from specific geographical locations, safeguard against SQL injections, and restrict certain Query String parameters. 
 ## Architecture
-![AWS-WAF-with-ALB-to-block-SQL-Injection-Geo-Location-and-Query-string](https://github.com/user-attachments/assets/34fb0487-8f9f-44cf-bee8-7911b895e3d5)
+
+![Architecture for KMS Key](https://github.com/user-attachments/assets/e2b8ceb1-20b7-4e2c-815b-a6d32005d975)
 
 
 
@@ -14,66 +14,33 @@ Setting up an Application Load Balancer in AWS Elastic Load Balancer by divide t
 
 
 ### Step-by-Step Implementation
-1. Create User Group
+1. Create User Group(reference: 1-Create User Group.png)
    - Attach <b>KMS_Policy</b> permissions.
-2. Create two Users
+2. Create two Users(reference: 2-Create two Users.png)  
    - One for Encryption and the second for Decryption 
    - Add Users to group.
    - Get Access key and Secret Access key.
-3. Create a KMS key.
+3. Create a KMS key.(reference: 3-Create a KMS key.png)
    - Define a key administrative permissions(The first user)
    - Define a key usage permissions(The second user)
    - Key Policy(JSON policy)
-4. Launch an EC2 Instance.
-5. SSH into the EC2 Instance via SSH client.
+4. Launch an EC2 Instance.(reference: 4-Launch an EC2 Instance.png)
+5. SSH into the EC2 Instance via SSH client.(reference: 5-SSH client.png)
 6. Perform KMS Encryption and Decryption
-   - Create a file with the name note.txt
-   - Execute AWS configuration.
-   - Encrypt the text file.
-   - View the statement.
-   - Decrypt the Encrypted file.
-   - View the statement(Clear text).
-   - Re-Encrypt the text file.
-   - View the statement(after Re-Encryption)
-   - instance-type t2.micro
-   - Keypair.pem
-   - auto-assign public IPV4 address
-   - Security groupe web: <b>MyWebserverSG</b>
-   - inbound rule: SSH, HTTP, HTTPs
-   - user-data file://apache_install.sh(reference: 1-Launch two EC2 Instances.png)
-2. Create a <b>Target groupe</b> for the <b>Load Balancer</b> to distribute traffic among these <b>instances</b>.(reference: 2-Create a Target groupe.png)
-3. Create <b>Application Load Balancer</b>(reference: 3-Create Application Load Balancer.png)
-4. Test the Load Balancer by copy the <b>DNS</b> name and past it to the browser, the ALB will equally divide the incoming traffic to both servers in a Round Robin manner.
-   - Response coming from server 1(reference: 4-Response coming from server 1.png)
-   - Response coming from server 2(reference: 4-Response coming from server 2.png)
-   
-5. Test <b>SQL Injection</b>
-   - We will add the following URL parameter: /product?item=securitynumber+OR+1=1--
-   - Syntax will be: http://ELB DNS/product?item=securitynumber+OR+1=1--
-   - <b>Result</b>: <b>SQL Injection went inside the server and it doesn't know how to solve this URL</b>.(reference: 5-Test SQL Injection.png)
-6. Test <b>Query String Parameter</b>
-   - We will add the following URL parameter: /?admin=123456
-   - Syntax will be: http://ELB DNS/?admin=123456
-   - <b>Result</b>: <b>The server passes the Query String inside, there is no error the admin parameter becames an unused value</b>.(reference: 6-Test Query String Parameter.png)
-     
-7. In <b>WAF & Shield</b> we create a <b>Web ACL</b>
-   - Add AWS resources: Application load balancer
-   - Add rules GeolocationRestriction, QueryStringRestriction, SQL database(reference: 7-create a Web ACL.png)
+   - Create a file with the name note.txt(reference: 6-Create file note.txt.png)
+   - Execute AWS configuration.(reference: 7-AWS configuration.png)
+   - Encrypt the text file.(reference: 8-Encryption.png)
+   - View the statement.(reference: 9-Ecryption view.png)
+   - Decrypt the Encrypted file.(reference: 10-Decryption.png)
+   - View the statement(Clear text).(reference: 11-Clear Text.png)
+   - Re-Encrypt the text file.(reference: 12-Re-Encryption.png)
+   - View the statement(after Re-Encryption)(reference: 13-Re-Encryption view.png)
   
-8. ReTest <b>SQL Injection</b>
-   - We will add the following URL parameter: /product?item=securitynumber+OR+1=1--
-   - Syntax will be: http://ELB DNS/product?item=securitynumber+OR+1=1--
-   - <b>Result</b>: <b>SQL Injection is blocked by WAF before it goes inside the server.</b>(reference: 8-ReTest SQL Injection.png)
-   
-9. ReTest <b>Query String Parameter</b>
-   - We will add the following URL parameter: /?admin=123456
-   - Syntax will be: http://ELB DNS/?admin=123456
-   - <b>Result</b>: <b>The Query String which contains admin is blocked by WAF before it could go inside the server</b>(reference: 9-ReTest Query String Parameter.png)
 
  
     
 
-> *Lab originally from: [Whizlabs - Implementing AWS WAF with ALB to block SQL Injection, Geo Location and Query string](https://www.whizlabs.com/labs/implementing-aws-waf-with-alb-to-block-sql-injection-geo-location-and-query-string/))*
+> *Lab originally from: [Whizlabs - Encryption and Decryption Using KMS](https://www.whizlabs.com/labs/encryption-and-decryption-using-kms/))*
 
 
 
