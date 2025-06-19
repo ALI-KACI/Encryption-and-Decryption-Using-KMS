@@ -28,16 +28,32 @@ Create AWS KMS key for encrypting data at rest and performing server-side encryp
 5. SSH into the EC2 Instance via SSH client.(reference: 5-SSH client.png)
 6. Perform KMS Encryption and Decryption
    - Create a file with the name note.txt(reference: 6-Create file note.txt.png)
+  
+     
    - Execute AWS configuration.(reference: 7-AWS configuration.png)
+  
+     
    - Encrypt the text file.(reference: 8-Encryption.png)
+  
+     
    - View the statement.(reference: 9-Ecryption view.png)
+  
+     
    - Decrypt the Encrypted file.(reference: 10-Decryption.png)
+  
+     
    - View the statement(Clear text).(reference: 11-Clear Text.png)
+  
+     
    - Re-Encrypt the text file.(reference: 12-Re-Encryption.png)
+  
+     
    - View the statement(after Re-Encryption)(reference: 13-Re-Encryption view.png)
   
 
  
+
+
     
 
 > *Lab originally from: [Whizlabs - Encryption and Decryption Using KMS](https://www.whizlabs.com/labs/encryption-and-decryption-using-kms/))*
